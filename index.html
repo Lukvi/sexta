@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador para Sexta-feira</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f3f3f3;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #333;
+    }
+    p {
+      margin: 5px 0;
+    }
+    .contador {
+      font-size: 24px;
+      margin: 10px 0;
+      color: #555;
+    }
+    .imagem {
+      margin: 20px auto;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contador para Sexta-feira às 13:00</h1>
+  <p>Dia atual: <span id="diaAtual"></span></p>
+  <p>Sexta-feira: <span id="proximaSexta"></span></p>
+  <div class="contador" id="dias"></div>
+  <div class="contador" id="horas"></div>
+  <div class="contador" id="minutos"></div>
+  <div class="contador" id="segundos"></div>
+  <div class="contador" id="milissegundos"></div>
+  <div class="imagem">
+    <img src="https://imageproxyb.ifunny.co/crop:x-20,resize:640x,quality:90x75/images/18f4065054fb1628a3ee7575c56fb8588318b1a147f6b8781a652ee434dd7df6_1.jpg" alt="Imagem" style="max-width: 100%;">
+  </div>
+
+  <script>
+    // Função para atualizar o contador a cada milissegundo
+    function atualizarContador() {
+      var agora = new Date();
+      var sextaFeira = new Date(agora);
+
+      // Define sexta-feira às 13:00
+      sextaFeira.setDate(agora.getDate() + (5 + 7 - agora.getDay()) % 7);
+      sextaFeira.setHours(13, 0, 0, 0);
+
+      // Calcula a diferença entre agora e sexta-feira
+      var diferenca = sextaFeira - agora;
+      var milissegundos = diferenca % 1000;
+      var segundos = Math.floor(diferenca / 1000);
+      var minutos = Math.floor(segundos / 60);
+      var horas = Math.floor(minutos / 60);
+      var dias = Math.floor(horas / 24);
+
+      // Exibe os valores no HTML
+      document.getElementById("diaAtual").innerText = agora.toLocaleDateString("pt-BR");
+      document.getElementById("proximaSexta").innerText = sextaFeira.toLocaleDateString("pt-BR");
+      document.getElementById("dias").innerText = "Dias: " + dias;
+      document.getElementById("horas").innerText = "Horas: " + (horas % 24);
+      document.getElementById("minutos").innerText = "Minutos: " + (minutos % 60);
+      document.getElementById("segundos").innerText = "Segundos: " + (segundos % 60);
+      document.getElementById("milissegundos").innerText = "Milissegundos: " + milissegundos;
+    }
+
+    // Atualiza o contador inicialmente
+    atualizarContador();
+
+    // Atualiza o contador a cada milissegundo
+    setInterval(atualizarContador, 1);
+  </script>
+</body>
+</html>
